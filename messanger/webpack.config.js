@@ -25,7 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: `${__dirname}/static_src`,
+        // include: `${__dirname}/static_src`,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
