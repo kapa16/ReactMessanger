@@ -1,9 +1,10 @@
 import React from 'react';
+import './Header.sass'
 
 const Header = () => {
   return (
     <div>
-      <h2>My app</h2>
+      <h2 className="header">My app</h2>
     </div>
   )
 };

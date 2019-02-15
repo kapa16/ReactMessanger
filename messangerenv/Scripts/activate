@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Projects\ReactMessanger\messangerenv"
+VIRTUAL_ENV="J:\Projects\ReactMessanger\messangerenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -1,4 +1,4 @@
-#!d:\projects\reactmessanger\messangerenv\scripts\python.exe
+#!j:\projects\reactmessanger\messangerenv\scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":
