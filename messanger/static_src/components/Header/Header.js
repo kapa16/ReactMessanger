@@ -4,7 +4,7 @@ import './Header.sass'
 const Header = () => {
   return (
     <div>
-      <h2 className="header">My app</h2>
+      <h2 className="header">Messanger</h2>
     </div>
   )
 };
