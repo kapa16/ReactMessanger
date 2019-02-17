@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
@@ -27,9 +28,14 @@
     "presets": [
       "@babel/env",
       "@babel/react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      "@babel/plugin-proposal-class-properties"
     ]
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0"
   }
