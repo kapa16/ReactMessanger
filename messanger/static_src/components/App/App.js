@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Header from "../Header/Header";
+import MessageList from "../MessageList/MessageList";
+import MessageForm from "../MessageForm/MessageForm";
 
-const App = () => {
-  return (
-    <div>
-      <Header/>
-    </div> 
-  )
+export default class App extends Component {
+
+  state = {
+    messages: []
+  };
+
+  render() {
+    return (
+      <div>
+        <Header/>
+        <MessageList/>
+        <MessageForm/>
+      </div>
+    )
+  }
+
 };
-
-export default App;
