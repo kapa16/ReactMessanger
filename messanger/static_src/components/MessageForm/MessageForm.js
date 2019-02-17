@@ -5,7 +5,7 @@ const MessageForm = () => {
     <div>
       <form action="#" name="msgForm">
         <input type="text" name="msgInput" placeholder="Write message"/>
-        <button type="submit" className={}></button>
+        <button type="submit"></button>
       </form>
     </div>
   )
