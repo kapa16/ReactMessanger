@@ -33,20 +33,35 @@ export default class App extends Component {
 
   createMessageHandler = (e) => {
     e.preventDefault();
-    this.setState(({ messages, currentMessage, robotMessage }) => {
-      const newArr = [
-        ...messages,
-        this.createMessage(currentMessage, 'mySelf'),
-        setTimeout(this.createMessage(robotMessage, 'robot'), 3000)
-      ];
+    this.setState(({ messages, currentMessage }) => {
       return {
         currentMessage: '',
-        messages: newArr
-      }})
+        messages: [
+          ...messages,
+          this.createMessage(currentMessage, 'mySelf')
+        ]
+      }
+    });
+    this.addRobotMsg();
+  };
+
+  showRobotMsg = () => {
+    this.setState(({ messages, robotMessage }) => {
+      return {
+        messages: [
+          ...messages,
+          this.createMessage(robotMessage, 'robot')
+        ]
+      }
+    });
+  };
+
+  addRobotMsg = () => {
+    setTimeout(this.showRobotMsg, 3000);
   };
 
   render() {
-    const { currentMessage, messages } = this.state;
+    const {currentMessage, messages} = this.state;
 
     return (
       <div className="container">
