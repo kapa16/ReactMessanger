@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import './MessageItem.sass'
 
-const MessageItem = () => {
+const MessageItem = ({ text, createdDate, createdTime }) => {
   return (
-    <div>
-      <div>Message content</div>
-      <div>12:26</div>
-
+    <div className="item">
+      <p className="item__text">{text}</p>
+      <p className="item__info">
+        <span>{createdDate}</span>
+        <span>{createdTime}</span>
+      </p>
     </div>
   )
 };
