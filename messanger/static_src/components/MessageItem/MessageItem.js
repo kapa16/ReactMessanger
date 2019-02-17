@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import './MessageItem.sass'
 
 const MessageItem = ({ text, createdDate, createdTime }) => {
