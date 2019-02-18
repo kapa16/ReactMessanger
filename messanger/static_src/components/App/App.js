@@ -33,6 +33,9 @@ export default class App extends Component {
 
   createMessageHandler = (e) => {
     e.preventDefault();
+    if (!this.state.currentMessage) {
+      return;
+    }
     this.setState(({ messages, currentMessage }) => {
       return {
         currentMessage: '',
