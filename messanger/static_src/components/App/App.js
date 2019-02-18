@@ -60,7 +60,7 @@ export default class App extends Component {
   };
 
   addRobotMsg = () => {
-    setTimeout(this.showRobotMsg, 3000);
+    setTimeout(this.showRobotMsg, 2000);
   };
 
   render() {
