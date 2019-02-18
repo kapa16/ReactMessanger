@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import './MessageForm.sass'
 
 const MessageForm = ({createMessageHandler, onChangeMessage, message}) => {
   return (
@@ -7,6 +8,7 @@ const MessageForm = ({createMessageHandler, onChangeMessage, message}) => {
         action="#"
         name="msgForm"
         onSubmit={(e) => createMessageHandler(e)}
+        className="msg-form"
       >
         <input
           type="text"
@@ -14,8 +16,9 @@ const MessageForm = ({createMessageHandler, onChangeMessage, message}) => {
           placeholder="Write message"
           onChange={(e) => onChangeMessage(e)}
           value={message}
+          className="msg-form__input"
         />
-        <button type="submit">Send</button>
+        <button type="submit" className="msg-form__button"></button>
       </form>
     </Fragment>
   )
