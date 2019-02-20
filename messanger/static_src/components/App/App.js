@@ -31,32 +31,27 @@ export default class App extends Component {
     }
   };
 
+  getMessages = (messages, currentMessage, sender) => {
+    return {
+      currentMessage: '',
+      messages: [
+        ...messages,
+        this.createMessage(currentMessage, sender)
+      ]
+    };
+  };
+
   createMessageHandler = (e) => {
     e.preventDefault();
     if (!this.state.currentMessage) {
       return;
     }
-    this.setState(({ messages, currentMessage }) => {
-      return {
-        currentMessage: '',
-        messages: [
-          ...messages,
-          this.createMessage(currentMessage, 'mySelf')
-        ]
-      }
-    });
+    this.setState(({messages, currentMessage}) => this.getMessages(messages, currentMessage, 'mySelf'));
     this.addRobotMsg();
   };
 
   showRobotMsg = () => {
-    this.setState(({ messages, robotMessage }) => {
-      return {
-        messages: [
-          ...messages,
-          this.createMessage(robotMessage, 'robot')
-        ]
-      }
-    });
+    this.setState(({messages, robotMessage}) => this.getMessages(messages, robotMessage, 'robot'));
   };
 
   addRobotMsg = () => {
