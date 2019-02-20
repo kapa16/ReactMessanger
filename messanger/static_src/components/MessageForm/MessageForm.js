@@ -1,13 +1,26 @@
-import React from 'react';
+import React, {Fragment} from 'react';
+import './MessageForm.sass'
 
-const MessageForm = () => {
+const MessageForm = ({createMessageHandler, onChangeMessage, message}) => {
   return (
-    <div>
-      <form action="#" name="msgForm">
-        <input type="text" name="msgInput" placeholder="Write message"/>
-        <button type="submit" className={}></button>
+    <Fragment>
+      <form
+        action="#"
+        name="msgForm"
+        onSubmit={(e) => createMessageHandler(e)}
+        className="msg-form"
+      >
+        <input
+          type="text"
+          name="msgInput"
+          placeholder="Write message"
+          onChange={(e) => onChangeMessage(e)}
+          value={message}
+          className="msg-form__input"
+        />
+        <button type="submit" className="msg-form__button"></button>
       </form>
-    </div>
+    </Fragment>
   )
 };
 
