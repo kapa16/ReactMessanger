@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import './App.sass'
-import Header from "../Header/Header";
-import MessageList from "../MessageList/MessageList";
-import MessageForm from "../MessageForm/MessageForm";
+import Layout from "../Layout/Layout";
 
 export default class App extends Component {
 
@@ -63,9 +61,8 @@ export default class App extends Component {
 
     return (
       <div className="container">
-        <Header/>
-        <MessageList messages={messages}/>
-        <MessageForm
+        <Layout
+          messages={messages}
           createMessageHandler={this.createMessageHandler}
           onChangeMessage={this.onChangeMessage}
           message={currentMessage}
