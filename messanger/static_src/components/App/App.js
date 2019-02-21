@@ -34,10 +34,12 @@ export default class App extends Component {
     currentMessage: '',
     robotMessage: 'This is robot answer',
     messages: [],
-    chats
+    chats,
+    chatId: 0
   };
 
-  currentId = 0;
+  currentMessageId = 0;
+  currentChatId = 0;
 
   onChangeMessage = (e) => {
     this.setState({
@@ -48,7 +50,7 @@ export default class App extends Component {
   createMessage = (text, sender) => {
     const created = new Date();
     return {
-      id: this.currentId++,
+      id: this.currentMessageId++,
       text,
       sender,
       createdDate: created.toLocaleDateString(),
@@ -96,7 +98,10 @@ export default class App extends Component {
         <CssBaseline/>
         <Switch>
           <Route exact path="/" render={() => <Layout {...propsLayout}/>}/>
-          <Route exact path="/chat/:id" render={(obj) => <Layout {...propsLayout} id={+obj.match.params.id}/>}/>
+          <Route exact path="/chat/:id" render={(obj) => {
+            this.currentChatId = +obj.match.params.id;
+            return <Layout {...propsLayout} id={this.currentChatId}/>}
+          }/>
         </Switch>
 
       </Grid>

@@ -16,7 +16,7 @@ const Layout = (props) => {
         <Grid item xs={12} md={3} component="aside">
             <ChatList
               chats={chats}
-              selectChat={id}
+              chatId={id}
             />
         </Grid>
         <Grid item xs={12} md={9} className="content" component="main">
