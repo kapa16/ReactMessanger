@@ -29,4 +29,8 @@ const Layout = (props) => {
   )
 };
 
+Layout.defaultProps = {
+  id: 1
+};
+
 export default Layout;
