@@ -56,67 +56,42 @@ export default class App extends Component {
     }
   };
 
-  // getMessages = (messages, currentMessage, sender) => {
-  //   return {
-  //     currentMessage: '',
-  //     messages: [
-  //       ...messages,
-  //       this.createMessage(currentMessage, sender)
-  //     ]
-  //   };
-  // };
+  getNewState = (chats, currentMessage, sender, currentChatId) => {
+    const currentChat = chats.find((chat) => chat.id === currentChatId);
+    if (!currentChat) {
+      return this.state;
+    }
+
+    currentChat.messages.push(this.createMessage(currentMessage, sender));
+
+    const index = chats.indexOf(currentChat);
+    return {
+      chats: [
+        ...chats.slice(0, index),
+        Object.assign({}, currentChat),
+        ...chats.slice(index + 1)
+      ],
+      currentMessage: ''
+    }
+  };
 
   createMessageHandler = (e) => {
     e.preventDefault();
     if (!this.state.currentMessage) {
       return;
     }
-    this.setState(({messages, currentMessage}) => {
-      const currentChat = chats.find((chat) => chat.id === this.currentChatId);
-      if (!currentChat) {
-        return this.state;
-      }
-
-      currentChat.messages.push(this.createMessage(currentMessage, 'mySelf'));
-
-      const index = chats.indexOf(currentChat);
-      return {
-        chats: [
-          ...chats.slice(0, index),
-          Object.assign({}, currentChat),
-          ...chats.slice(index + 1)
-        ],
-        currentMessage: ''
-      }
-      // this.getMessages(messages, currentMessage, 'mySelf')
-    });
-    this.addRobotMsg();
+    this.setState(({chats, currentMessage}) =>
+      this.getNewState(chats, currentMessage, 'mySelf', this.currentChatId));
+    this.addRobotMsg(this.currentChatId);
   };
 
-  showRobotMsg = () => {
-    this.setState(({chats, robotMessage}) => {
-      const currentChat = chats.find((chat) => chat.id === this.currentChatId);
-      if (!currentChat) {
-        return this.state;
-      }
-
-      currentChat.messages.push(this.createMessage(robotMessage, 'robot'));
-
-      const index = chats.indexOf(currentChat);
-      return {
-        chats: [
-          ...chats.slice(0, index),
-          Object.assign({}, currentChat),
-          ...chats.slice(index)
-        ],
-        currentMessage: ''
-      }
-    });
-    // this.getMessages(chats.find((chat) => chat.id === this.currentChatId).messages, robotMessage, 'robot'));
+  showRobotMsg = (currentChatId) => {
+    this.setState(({chats, robotMessage}) =>
+      this.getNewState(chats, robotMessage, 'robot', currentChatId));
   };
 
-  addRobotMsg = () => {
-    setTimeout(this.showRobotMsg, 2000);
+  addRobotMsg = (currentChatId) => {
+    setTimeout(this.showRobotMsg, 2000, currentChatId);
   };
 
   render() {
