@@ -1,14 +1,25 @@
 import React, {Fragment} from 'react';
+import Grid from "@material-ui/core/Grid";
+
 import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";
 import MessageForm from "../MessageForm/MessageForm";
+import ChatList from "../ChatList/ChatList";
 
 const Layout = ({messages, ...propsForm}) => {
   return (
     <Fragment>
       <Header/>
-      <MessageList messages={messages}/>
-      <MessageForm {...propsForm}/>
+      <Grid container>
+        <Grid item xs={12} md={3}>
+          <ChatList/>
+        </Grid>
+        <Grid item xs={12} md={9}>
+          <MessageList messages={messages}/>
+          <MessageForm {...propsForm}/>
+        </Grid>
+
+      </Grid>
     </Fragment>
   )
 };
