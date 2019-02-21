@@ -39,20 +39,15 @@ module.exports = {
         test: /\.(scss|sass)$/,
         // loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded,modules: true',
         use: [
+          'style-loader',
+          'css-loader',
           {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            option: {
-              sourceMap: true,
+            loader: 'sass-loader',
+            options: {
               modules: true
             }
           },
-          {
-            loader: 'sass-loader'
-          }
-        ]
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg|ttf|eot|woff|woff2)$/,
