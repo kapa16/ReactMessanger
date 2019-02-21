@@ -33,9 +33,7 @@ export default class App extends Component {
   state = {
     currentMessage: '',
     robotMessage: 'This is robot answer',
-    messages: [],
-    chats,
-    chatId: 0
+    chats
   };
 
   currentMessageId = 0;
@@ -58,27 +56,63 @@ export default class App extends Component {
     }
   };
 
-  getMessages = (messages, currentMessage, sender) => {
-    return {
-      currentMessage: '',
-      messages: [
-        ...messages,
-        this.createMessage(currentMessage, sender)
-      ]
-    };
-  };
+  // getMessages = (messages, currentMessage, sender) => {
+  //   return {
+  //     currentMessage: '',
+  //     messages: [
+  //       ...messages,
+  //       this.createMessage(currentMessage, sender)
+  //     ]
+  //   };
+  // };
 
   createMessageHandler = (e) => {
     e.preventDefault();
     if (!this.state.currentMessage) {
       return;
     }
-    this.setState(({messages, currentMessage}) => this.getMessages(messages, currentMessage, 'mySelf'));
+    this.setState(({messages, currentMessage}) => {
+      const currentChat = chats.find((chat) => chat.id === this.currentChatId);
+      if (!currentChat) {
+        return this.state;
+      }
+
+      currentChat.messages.push(this.createMessage(currentMessage, 'mySelf'));
+
+      const index = chats.indexOf(currentChat);
+      return {
+        chats: [
+          ...chats.slice(0, index),
+          Object.assign({}, currentChat),
+          ...chats.slice(index + 1)
+        ],
+        currentMessage: ''
+      }
+      // this.getMessages(messages, currentMessage, 'mySelf')
+    });
     this.addRobotMsg();
   };
 
   showRobotMsg = () => {
-    this.setState(({messages, robotMessage}) => this.getMessages(messages, robotMessage, 'robot'));
+    this.setState(({chats, robotMessage}) => {
+      const currentChat = chats.find((chat) => chat.id === this.currentChatId);
+      if (!currentChat) {
+        return this.state;
+      }
+
+      currentChat.messages.push(this.createMessage(robotMessage, 'robot'));
+
+      const index = chats.indexOf(currentChat);
+      return {
+        chats: [
+          ...chats.slice(0, index),
+          Object.assign({}, currentChat),
+          ...chats.slice(index)
+        ],
+        currentMessage: ''
+      }
+    });
+    // this.getMessages(chats.find((chat) => chat.id === this.currentChatId).messages, robotMessage, 'robot'));
   };
 
   addRobotMsg = () => {
@@ -98,9 +132,10 @@ export default class App extends Component {
         <CssBaseline/>
         <Switch>
           <Route exact path="/" render={() => <Layout {...propsLayout}/>}/>
-          <Route exact path="/chat/:id" render={(obj) => {
+          <Route path="/chat/:id" render={(obj) => {
             this.currentChatId = +obj.match.params.id;
-            return <Layout {...propsLayout} id={this.currentChatId}/>}
+            return <Layout {...propsLayout} id={this.currentChatId}/>
+          }
           }/>
         </Switch>
 

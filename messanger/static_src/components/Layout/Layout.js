@@ -8,7 +8,7 @@ import './Layout.sass'
 
 
 const Layout = (props) => {
-  const {id, messages, chats, ...propsForm} = props;
+  const {id, chats, ...propsForm} = props;
   return (
     <Fragment>
       <Header/>
@@ -20,7 +20,7 @@ const Layout = (props) => {
             />
         </Grid>
         <Grid item xs={12} md={9} className="content" component="main">
-          <MessageList messages={messages}/>
+          <MessageList messages={chats.find((chat) => chat.id === id).messages}/>
           <MessageForm {...propsForm}/>
         </Grid>
 
