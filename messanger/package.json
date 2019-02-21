@@ -38,5 +38,7 @@
       "@babel/plugin-proposal-class-properties"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  }
 }
