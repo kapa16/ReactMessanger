@@ -33,8 +33,7 @@ export default class App extends Component {
     currentMessage: '',
     robotMessage: 'This is robot answer',
     messages: [],
-    chats,
-    chatOpen: true
+    chats
   };
 
   currentId = 0;
@@ -83,25 +82,19 @@ export default class App extends Component {
     setTimeout(this.showRobotMsg, 2000);
   };
 
-  handleChatListOpen = () => {
-    this.setState({chatOpen: true});
-  };
-
-  handleChatListClose = () => {
-    this.setState({chatOpen: false});
-  };
-
   render() {
+
+    const propsLayout = {
+      ...this.state,
+      createMessageHandler: this.createMessageHandler,
+      onChangeMessage: this.onChangeMessage
+    };
 
     return (
       <Grid container className="app">
         <CssBaseline/>
         <Layout
-          {...this.state}
-          createMessageHandler={this.createMessageHandler}
-          onChangeMessage={this.onChangeMessage}
-          handleChatListOpen={this.handleChatListOpen}
-          handleChatListClose={this.handleChatListClose}
+          {...propsLayout}
         />
       </Grid>
     )

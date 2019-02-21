@@ -7,17 +7,14 @@ import ChatList from "../ChatList/ChatList";
 import './Layout.sass'
 
 
-const Layout = ({chatOpen, handleChatListOpen, handleChatListClose, messages, chats, ...propsForm}) => {
+const Layout = ({messages, chats, ...propsForm}) => {
   return (
     <Fragment>
-      <Header
-        handleChatListOpen={handleChatListOpen}
-      />
+      <Header/>
       <Grid container className="container layout">
         <Grid item xs={12} md={3}>
             <ChatList
               chats={chats}
-              handleChatListClose={handleChatListClose}
             />
         </Grid>
         <Grid item xs={12} md={9} className="content">
