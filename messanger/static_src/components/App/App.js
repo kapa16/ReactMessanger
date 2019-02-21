@@ -95,9 +95,8 @@ export default class App extends Component {
       <Grid container className="app">
         <CssBaseline/>
         <Switch>
-          <Route exact path="/" render={({...propsLayout}) => <Layout />}/>
-          <Route exact path="/chat/:id"
-                 component={Layout}/>
+          <Route exact path="/" render={() => <Layout {...propsLayout}/>}/>
+          <Route exact path="/chat/:id" render={(obj) => <Layout {...propsLayout} id={+obj.match.params.id}/>}/>
         </Switch>
 
       </Grid>
