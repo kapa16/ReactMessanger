@@ -8,9 +8,7 @@ import './Layout.sass'
 
 
 const Layout = (props) => {
-  const {messages, chats, ...propsForm} = props;
-  const id = props.match.params.id;
-  console.log(id);
+  const {id, messages, chats, ...propsForm} = props;
   return (
     <Fragment>
       <Header/>
@@ -18,6 +16,7 @@ const Layout = (props) => {
         <Grid item xs={12} md={3} component="aside">
             <ChatList
               chats={chats}
+              selectChat={id}
             />
         </Grid>
         <Grid item xs={12} md={9} className="content" component="main">
