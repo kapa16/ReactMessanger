@@ -3,16 +3,12 @@ import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";
 import MessageForm from "../MessageForm/MessageForm";
 
-const Layout = ({messages, createMessageHandler, onChangeMessage, message}) => {
+const Layout = ({messages, ...propsForm}) => {
   return (
     <Fragment>
       <Header/>
       <MessageList messages={messages}/>
-      <MessageForm
-        createMessageHandler={createMessageHandler}
-        onChangeMessage={onChangeMessage}
-        message={message}
-      />
+      <MessageForm {...propsForm}/>
     </Fragment>
   )
 };
