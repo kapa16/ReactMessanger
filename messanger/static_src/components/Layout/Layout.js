@@ -7,17 +7,20 @@ import ChatList from "../ChatList/ChatList";
 import './Layout.sass'
 
 
-const Layout = ({messages, chats, ...propsForm}) => {
+const Layout = (props) => {
+  const {messages, chats, ...propsForm} = props;
+  const id = props.match.params.id;
+  console.log(id);
   return (
     <Fragment>
       <Header/>
       <Grid container className="container layout">
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={3} component="aside">
             <ChatList
               chats={chats}
             />
         </Grid>
-        <Grid item xs={12} md={9} className="content">
+        <Grid item xs={12} md={9} className="content" component="main">
           <MessageList messages={messages}/>
           <MessageForm {...propsForm}/>
         </Grid>

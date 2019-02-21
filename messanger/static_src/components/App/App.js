@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import './App.sass'
-import Layout from "../Layout/Layout";
+import {Route, Switch} from "react-router";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Layout from "../Layout/Layout";
+import './App.sass'
 
 const chats = [
   {
@@ -93,9 +94,12 @@ export default class App extends Component {
     return (
       <Grid container className="app">
         <CssBaseline/>
-        <Layout
-          {...propsLayout}
-        />
+        <Switch>
+          <Route exact path="/" render={({...propsLayout}) => <Layout />}/>
+          <Route exact path="/chat/:id"
+                 component={Layout}/>
+        </Switch>
+
       </Grid>
     )
   }
