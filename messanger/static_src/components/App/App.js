@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './App.sass'
 import Layout from "../Layout/Layout";
+import Grid from "@material-ui/core/Grid";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 const chats = [
   {
@@ -31,7 +33,8 @@ export default class App extends Component {
     currentMessage: '',
     robotMessage: 'This is robot answer',
     messages: [],
-    chats
+    chats,
+    chatOpen: true
   };
 
   currentId = 0;
@@ -80,16 +83,27 @@ export default class App extends Component {
     setTimeout(this.showRobotMsg, 2000);
   };
 
+  handleChatListOpen = () => {
+    this.setState({chatOpen: true});
+  };
+
+  handleChatListClose = () => {
+    this.setState({chatOpen: false});
+  };
+
   render() {
 
     return (
-      <div className="container">
+      <Grid container className="app">
+        <CssBaseline/>
         <Layout
           {...this.state}
           createMessageHandler={this.createMessageHandler}
           onChangeMessage={this.onChangeMessage}
+          handleChatListOpen={this.handleChatListOpen}
+          handleChatListClose={this.handleChatListClose}
         />
-      </div>
+      </Grid>
     )
   }
 

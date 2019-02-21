@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import Input from "@material-ui/core/Input";
 import './MessageForm.sass'
 
 const MessageForm = ({createMessageHandler, onChangeMessage, currentMessage}) => {
@@ -10,7 +11,7 @@ const MessageForm = ({createMessageHandler, onChangeMessage, currentMessage}) =>
         onSubmit={(e) => createMessageHandler(e)}
         className="msg-form"
       >
-        <input
+        <Input
           type="text"
           name="msgInput"
           placeholder="Write message"
