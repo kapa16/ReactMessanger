@@ -39,5 +39,7 @@
       "@babel/plugin-proposal-class-properties"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@material-ui/core": "^3.9.2"
+  }
 }
