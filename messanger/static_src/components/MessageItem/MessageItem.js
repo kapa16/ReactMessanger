@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import './MessageItem.sass'
 
 const MessageItem = ({ text, createdDate, createdTime }) => {
@@ -11,6 +12,10 @@ const MessageItem = ({ text, createdDate, createdTime }) => {
       </p>
     </div>
   )
+};
+
+MessageItem.propTypes ={
+  text: PropTypes.string
 };
 
 export default MessageItem;

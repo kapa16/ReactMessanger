@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import PropTypes from "prop-types";
 import Input from "@material-ui/core/Input";
 import './MessageForm.sass'
 
@@ -23,6 +24,12 @@ const MessageForm = ({createMessageHandler, onChangeMessage, currentMessage}) =>
       </form>
     </Fragment>
   )
+};
+
+MessageForm.propTypes ={
+  createMessageHandler: PropTypes.func,
+  onChangeMessage: PropTypes.func,
+  currentMessage: PropTypes.string,
 };
 
 export default MessageForm;
