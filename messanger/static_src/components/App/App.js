@@ -2,12 +2,36 @@ import React, {Component} from 'react';
 import './App.sass'
 import Layout from "../Layout/Layout";
 
+const chats = [
+  {
+    id: 1,
+    title: "First chat",
+    messages: []
+  },
+  {
+    id: 2,
+    title: "Second chat",
+    messages: []
+  },
+  {
+    id: 3,
+    title: "Third chat",
+    messages: []
+  },
+  {
+    id: 4,
+    title: "Fourth chat",
+    messages: []
+  },
+];
+
 export default class App extends Component {
 
   state = {
     currentMessage: '',
     robotMessage: 'This is robot answer',
-    messages: []
+    messages: [],
+    chats
   };
 
   currentId = 0;
@@ -57,15 +81,13 @@ export default class App extends Component {
   };
 
   render() {
-    const {currentMessage, messages} = this.state;
 
     return (
       <div className="container">
         <Layout
-          messages={messages}
+          {...this.state}
           createMessageHandler={this.createMessageHandler}
           onChangeMessage={this.onChangeMessage}
-          message={currentMessage}
         />
       </div>
     )

@@ -6,13 +6,13 @@ import MessageList from "../MessageList/MessageList";
 import MessageForm from "../MessageForm/MessageForm";
 import ChatList from "../ChatList/ChatList";
 
-const Layout = ({messages, ...propsForm}) => {
+const Layout = ({messages, chats, ...propsForm}) => {
   return (
     <Fragment>
       <Header/>
       <Grid container>
         <Grid item xs={12} md={3}>
-          <ChatList/>
+          <ChatList chats={chats} />
         </Grid>
         <Grid item xs={12} md={9}>
           <MessageList messages={messages}/>
