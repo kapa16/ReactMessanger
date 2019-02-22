@@ -37,7 +37,7 @@ export default class App extends Component {
   };
 
   currentMessageId = 0;
-  currentChatId = 0;
+  currentChatId = 1;
 
   onChangeMessage = (e) => {
     this.setState({
