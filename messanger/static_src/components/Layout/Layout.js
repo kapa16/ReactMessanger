@@ -13,7 +13,7 @@ const Layout = (props) => {
     <Fragment>
       <Header/>
       <Grid container className="container layout">
-        <Grid item xs={12} md={3} component="aside">
+        <Grid item xs={12} md={3} component="aside" className="aside">
             <ChatList
               chats={chats}
               chatId={id}
