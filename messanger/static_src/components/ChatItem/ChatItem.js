@@ -7,13 +7,13 @@ import Divider from "@material-ui/core/Divider";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 
-
 const ListItemLink = ({to, ...props}) => (
   <ListItem button component={Link} to={to} {...props}/>
   )
 ;
 
 const ChatItem = ({selected, id, title, img}) => {
+  //const imgSrc = require(`${img}`);
   return (
     <Fragment>
         <ListItemLink to={`/chat/${id}`} selected={selected}>

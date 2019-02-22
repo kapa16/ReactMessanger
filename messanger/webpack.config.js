@@ -50,9 +50,20 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif|svg|ttf|eot|woff|woff2)$/,
-        loader: 'url-loader?limit=4096&name=[path][name].[ext]',
+        test: /\.(png|gif|svg|ttf|eot|woff|woff2)$/,
+        loader: 'url-loader?limit=8192&name=[path][name].[ext]',
       },
+      {
+        test: /\.(jpg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      }
     ],
   },
 
