@@ -1,18 +1,47 @@
 import React, {Component} from 'react';
+import {Route, Switch} from "react-router";
+import Grid from "@material-ui/core/Grid";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Layout from "../Layout/Layout";
 import './App.sass'
-import Header from "../Header/Header";
-import MessageList from "../MessageList/MessageList";
-import MessageForm from "../MessageForm/MessageForm";
+
+const chats = [
+  {
+    id: 1,
+    title: "First chat",
+    img: "../../img/1.jpg",
+    messages: []
+  },
+  {
+    id: 2,
+    title: "Second chat",
+    img: "../../img/2.jpg",
+    messages: []
+  },
+  {
+    id: 3,
+    title: "Third chat",
+    img: "",
+    messages: []
+  },
+  {
+    id: 4,
+    title: "Fourth chat",
+    img: "",
+    messages: []
+  },
+];
 
 export default class App extends Component {
 
   state = {
     currentMessage: '',
     robotMessage: 'This is robot answer',
-    messages: []
+    chats
   };
 
-  currentId = 0;
+  currentMessageId = 0;
+  currentChatId = 1;
 
   onChangeMessage = (e) => {
     this.setState({
@@ -23,7 +52,7 @@ export default class App extends Component {
   createMessage = (text, sender) => {
     const created = new Date();
     return {
-      id: this.currentId++,
+      id: this.currentMessageId++,
       text,
       sender,
       createdDate: created.toLocaleDateString(),
@@ -31,14 +60,23 @@ export default class App extends Component {
     }
   };
 
-  getMessages = (messages, currentMessage, sender) => {
+  getNewState = (chats, currentMessage, sender, currentChatId) => {
+    const currentChat = chats.find((chat) => chat.id === currentChatId);
+    if (!currentChat) {
+      return this.state;
+    }
+
+    currentChat.messages.push(this.createMessage(currentMessage, sender));
+
+    const index = chats.indexOf(currentChat);
     return {
-      currentMessage: '',
-      messages: [
-        ...messages,
-        this.createMessage(currentMessage, sender)
-      ]
-    };
+      chats: [
+        ...chats.slice(0, index),
+        Object.assign({}, currentChat),
+        ...chats.slice(index + 1)
+      ],
+      currentMessage: ''
+    }
   };
 
   createMessageHandler = (e) => {
@@ -46,31 +84,41 @@ export default class App extends Component {
     if (!this.state.currentMessage) {
       return;
     }
-    this.setState(({messages, currentMessage}) => this.getMessages(messages, currentMessage, 'mySelf'));
-    this.addRobotMsg();
+    this.setState(({chats, currentMessage}) =>
+      this.getNewState(chats, currentMessage, 'mySelf', this.currentChatId));
+    this.addRobotMsg(this.currentChatId);
   };
 
-  showRobotMsg = () => {
-    this.setState(({messages, robotMessage}) => this.getMessages(messages, robotMessage, 'robot'));
+  showRobotMsg = (currentChatId) => {
+    this.setState(({chats, robotMessage}) =>
+      this.getNewState(chats, robotMessage, 'robot', currentChatId));
   };
 
-  addRobotMsg = () => {
-    setTimeout(this.showRobotMsg, 2000);
+  addRobotMsg = (currentChatId) => {
+    setTimeout(this.showRobotMsg, 2000, currentChatId);
   };
 
   render() {
-    const {currentMessage, messages} = this.state;
+
+    const propsLayout = {
+      ...this.state,
+      createMessageHandler: this.createMessageHandler,
+      onChangeMessage: this.onChangeMessage
+    };
 
     return (
-      <div className="container">
-        <Header/>
-        <MessageList messages={messages}/>
-        <MessageForm
-          createMessageHandler={this.createMessageHandler}
-          onChangeMessage={this.onChangeMessage}
-          message={currentMessage}
-        />
-      </div>
+      <Grid container className="app">
+        <CssBaseline/>
+        <Switch>
+          <Route exact path="/" render={() => <Layout {...propsLayout}/>}/>
+          <Route path="/chat/:id" render={(obj) => {
+            this.currentChatId = +obj.match.params.id;
+            return <Layout {...propsLayout} id={this.currentChatId}/>
+          }
+          }/>
+        </Switch>
+
+      </Grid>
     )
   }
 

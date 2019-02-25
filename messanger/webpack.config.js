@@ -17,9 +17,9 @@ module.exports = {
     minimize: NODE_ENV !== 'development',
   },
 
-  plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
-  ],
+  // plugins: [
+  //   new webpack.NoEmitOnErrorsPlugin(),
+  // ],
 
   module: {
     rules: [
@@ -37,12 +37,33 @@ module.exports = {
       },
       {
         test: /\.(scss|sass)$/,
-        loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded,modules: true',
+        // loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded,modules: true',
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              modules: true
+            }
+          },
+        ],
       },
       {
-        test: /\.(png|jpg|gif|svg|ttf|eot|woff|woff2)$/,
-        loader: 'url-loader?limit=4096&name=[path][name].[ext]',
+        test: /\.(png|gif|jpg|svg|ttf|eot|woff|woff2)$/,
+        loader: 'url-loader?limit=9998192&name=[path][name].[ext]',
       },
+      // {
+      //   test: /\.(jpg)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         name: '[path][name].[ext]',
+      //       },
+      //     },
+      //   ],
+      // }
     ],
   },
 

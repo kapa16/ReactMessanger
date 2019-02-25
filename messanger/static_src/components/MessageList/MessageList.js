@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import MessageItem from "../MessageItem/MessageItem";
 import './MessageList.sass';
 
@@ -30,6 +31,10 @@ const MessageList = ({ messages }) => {
       { messagesItems }
     </ul>
   )
+};
+
+MessageList.propTypes ={
+  messages: PropTypes.array
 };
 
 export default MessageList;
