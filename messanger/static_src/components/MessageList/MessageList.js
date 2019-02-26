@@ -1,59 +1,52 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import * as PropTypes from "prop-types";
 import MessageItem from "../MessageItem/MessageItem";
 import './MessageList.sass';
-import {connect} from "react-redux";
 
 
-const MessageList = ({ messages }) => {
-  console.log(messages);
-  // const showRobotMsg = (currentChatId) => {
-  //   getNewState(chats, robotMessage, 'robot', currentChatId);
-  // };
-  //
-  // const addRobotMsg = (currentChatId) => {
-  //   setTimeout(showRobotMsg, 2000, currentChatId);
-  // };
-// addRobotMsg(state.currentChatId);
+const MessageList = ({chats, chatId}) => {
+  const currentChat = chats.find((chat) => chat.id === chatId);
 
-  const messagesItems = messages.map(({ id, ...msgProps }) => {
-    let className = 'list__item';
-    if (msgProps.sender === 'mySelf') {
-      className += ' list__item-my';
-    } else {
-      className += ' list__item-other';
-    }
+  let messagesItems = null;
 
-    return (
-      <li
-        key={id}
-        className={className}
-      >
-        <MessageItem { ...msgProps }/>
-      </li>
-    );
-  });
+  if (currentChat) {
+    const messages = currentChat.messages;
+    messagesItems = messages.map(({id, ...msgProps}) => {
+      let className = 'list__item';
+      if (msgProps.sender === 'mySelf') {
+        className += ' list__item-my';
+      } else {
+        className += ' list__item-other';
+      }
+
+      return (
+        <li
+          key={id}
+          className={className}
+        >
+          <MessageItem {...msgProps}/>
+        </li>
+      );
+    });
+  }
 
   return (
     <ul className="list">
-      { messagesItems }
+      {messagesItems}
     </ul>
   )
 };
 
-MessageList.propTypes ={
+MessageList.propTypes = {
   messages: PropTypes.array
 };
 
 const mapStateToProps = (state) => {
-  const { chats, currentChatId } = state.messageReducer;
-  const currentChat = chats.find((chat) => chat.id === currentChatId);
-  // if (!currentChat) {
-  //   return {messages: []};
-  // }
+  const {chats, currentChatId} = state.messageReducer;
   return {
-    messages: currentChat.messages,
+    chats: chats,
+    chatId: currentChatId,
   }
 };
-
 export default connect(mapStateToProps)(MessageList);
