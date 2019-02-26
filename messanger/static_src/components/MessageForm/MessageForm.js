@@ -5,17 +5,20 @@ import IconButton from "@material-ui/core/IconButton";
 import SendIcon from '@material-ui/icons/Send';
 import './MessageForm.sass'
 import {connect} from "react-redux";
-import {inputMessage} from "../../redux/actionsCreator/messageActionsCreator";
+import {inputMessage, sendMessage} from "../../redux/actionsCreator/messageActionsCreator";
 import {bindActionCreators} from "redux";
 
 
-const MessageForm = ({createMessageHandler, inputMessage, currentMessage}) => {
+const MessageForm = ({sendMessage, inputMessage, currentMessage}) => {
   return (
     <Fragment>
       <form
         action="#"
         name="msgForm"
-        onSubmit={(e) => createMessageHandler(e)}
+        onSubmit={(e) => {
+          e.preventDefault();
+          return sendMessage()
+        }}
         className="msg-form"
       >
         <Input
@@ -42,10 +45,10 @@ MessageForm.propTypes ={
 
 const mapStateToProps = (state) => {
   return {
-    currentMessage: state.messageReducer.input
+    currentMessage: state.messageReducer.currentMessage
   }
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({inputMessage}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({inputMessage, sendMessage}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);
