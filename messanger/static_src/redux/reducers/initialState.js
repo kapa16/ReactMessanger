@@ -6,13 +6,13 @@ const messageInitialState = {
     {
       id: 1,
       title: "First chat",
-      img: "../../img/1.jpg",
+      img: "/static/build/img/1.jpg",
       messages: []
     },
     {
       id: 2,
       title: "Second chat",
-      img: "../../img/2.jpg",
+      img: "/static/build/img/2.jpg",
       messages: []
     },
     {
