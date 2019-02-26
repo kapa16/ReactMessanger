@@ -3,8 +3,7 @@ import {List} from "@material-ui/core";
 import ChatItem from "../ChatItem/ChatItem";
 import {connect} from "react-redux";
 
-const ChatList = (props) => {
-  const {chats, chatId} = props;
+const ChatList = ({ chats, chatId }) => {
   const ChatListElements = chats.map((chat) => {
     return (
         <ChatItem
