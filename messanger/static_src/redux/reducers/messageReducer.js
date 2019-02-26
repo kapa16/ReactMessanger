@@ -1,4 +1,4 @@
-import update from 'immutability-helper';
+// import update from 'immutability-helper';
 import initialState from "./initialState";
 import {CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE} from '../actions/messagesActions'
 
@@ -41,7 +41,7 @@ const messageReducer = (state = initialState.messageInitialState, action) => {
       return {...state, ...getNewState(state.chats, state.currentMessage, 'mySelf', state.currentChatId)};
 
     case SEND_ROBOT_MESSAGE:
-      return state;
+      return {...state, ...getNewState(state.chats, state.robotMessage, 'robot', action.payload)};
 
     case INPUT_MESSAGE:
       return {...state, ...{currentMessage: action.payload}};
