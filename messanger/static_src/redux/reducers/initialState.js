@@ -1,4 +1,5 @@
 const messageInitialState = {
+  currentChatId: 1,
   currentMessage: '',
   robotMessage: 'This is robot answer',
   chats: [
@@ -29,4 +30,8 @@ const messageInitialState = {
   ]
 };
 
-export default messageInitialState;
+const initialState = {
+  messageInitialState
+};
+
+export default initialState;
