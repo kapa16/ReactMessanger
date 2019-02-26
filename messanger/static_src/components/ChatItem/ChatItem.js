@@ -4,38 +4,39 @@ import {connect} from "react-redux";
 import {changeChatId} from "../../redux/actionsCreator/messageActionsCreator";
 import {bindActionCreators} from "redux";
 import {Link} from "react-router-dom";
-import {ListItem} from "@material-ui/core";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
+import {ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Badge} from "@material-ui/core";
 
 const ListItemLink = ({to, ...props}) => (
-  <ListItem button component={Link} to={to} {...props}/>
+    <ListItem button component={Link} to={to} {...props}/>
   )
 ;
 
 const ChatItem = ({countMessages, selected, id, title, img, changeChatId}) => {
   return (
     <Fragment>
-        <ListItemLink
-          to={`/chat/${id}`}
-          selected={selected}
-          onClick={() => changeChatId(id)}
-        >
-          <ListItemAvatar>
-            <Avatar src={img}/>
-          </ListItemAvatar>
+      <ListItemLink
+        to={`/chat/${id}`}
+        selected={selected}
+        onClick={() => changeChatId(id)}
+      >
+
+        <ListItemAvatar>
+          <Avatar src={img}/>
+        </ListItemAvatar>
+
+        <Badge badgeContent={countMessages} color="primary">
           <ListItemText>
-            {title} ({countMessages})
+            {title}
           </ListItemText>
-        </ListItemLink>
+        </Badge>
+
+      </ListItemLink>
       <Divider/>
     </Fragment>
   )
 };
 
-ChatItem.propTypes ={
+ChatItem.propTypes = {
   selected: PropTypes.bool,
   id: PropTypes.number,
   title: PropTypes.string
