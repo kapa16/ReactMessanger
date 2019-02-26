@@ -5,20 +5,24 @@ import IconButton from "@material-ui/core/IconButton";
 import SendIcon from '@material-ui/icons/Send';
 import './MessageForm.sass'
 import {connect} from "react-redux";
-import {inputMessage, sendMessage} from "../../redux/actionsCreator/messageActionsCreator";
+import {inputMessage, sendMessage, sendRobotMessage} from "../../redux/actionsCreator/messageActionsCreator";
 import {bindActionCreators} from "redux";
 
 
-const MessageForm = ({sendMessage, inputMessage, currentMessage}) => {
+const MessageForm = ({sendMessage, inputMessage, sendRobotMessage, currentMessage, currentChatId}) => {
+
+  const sendMessageHandler = (e) => {
+    e.preventDefault();
+    sendMessage();
+    setTimeout(sendRobotMessage, 2000, currentChatId);
+  };
+
   return (
     <Fragment>
       <form
         action="#"
         name="msgForm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          return sendMessage()
-        }}
+        onSubmit={(e) => sendMessageHandler(e)}
         className="msg-form"
       >
         <Input
@@ -45,10 +49,12 @@ MessageForm.propTypes ={
 
 const mapStateToProps = (state) => {
   return {
-    currentMessage: state.messageReducer.currentMessage
+    currentMessage: state.messageReducer.currentMessage,
+    currentChatId: state.messageReducer.currentChatId
   }
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({inputMessage, sendMessage}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({inputMessage, sendMessage, sendRobotMessage}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageForm);

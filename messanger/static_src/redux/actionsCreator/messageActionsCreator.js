@@ -13,9 +13,10 @@ export const sendMessage = () => {
   }
 };
 
-export const sendRobotMessage = () => {
+export const sendRobotMessage = (chatId) => {
   return {
-    type: SEND_ROBOT_MESSAGE
+    type: SEND_ROBOT_MESSAGE,
+    payload: chatId
   }
 };
 
