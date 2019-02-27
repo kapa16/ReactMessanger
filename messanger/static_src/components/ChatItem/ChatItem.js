@@ -5,32 +5,41 @@ import {changeChatId} from "../../redux/actionsCreator/messageActionsCreator";
 import {bindActionCreators} from "redux";
 import {Link} from "react-router-dom";
 import {ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Badge} from "@material-ui/core";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const ListItemLink = ({to, ...props}) => (
     <ListItem button component={Link} to={to} {...props}/>
   )
 ;
 
-const ChatItem = ({countMessages, selected, id, title, img, changeChatId}) => {
+const styles = {
+  root: {
+    width: '100%',
+  },
+  badge: {
+    bottom: '0',
+    right: '20px',
+    top: 'auto',
+  },
+};
+
+const ChatItem = ({countMessages, selected, id, title, img, changeChatId, classes}) => {
   return (
     <Fragment>
-      <ListItemLink
-        to={`/chat/${id}`}
-        selected={selected}
-        onClick={() => changeChatId(id)}
-      >
-
-        <ListItemAvatar>
-          <Avatar src={img}/>
-        </ListItemAvatar>
-
-        <Badge badgeContent={countMessages} color="primary">
+      <Badge classes={{root: classes.root, badge: classes.badge}} badgeContent={countMessages} color="primary">
+        <ListItemLink
+          to={`/chat/${id}`}
+          selected={selected}
+          onClick={() => changeChatId(id)}
+        >
+          <ListItemAvatar>
+            <Avatar src={img}/>
+          </ListItemAvatar>
           <ListItemText>
             {title}
           </ListItemText>
-        </Badge>
-
-      </ListItemLink>
+        </ListItemLink>
+      </Badge>
       <Divider/>
     </Fragment>
   )
@@ -44,4 +53,4 @@ ChatItem.propTypes = {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({changeChatId}, dispatch);
 
-export default connect(null, mapDispatchToProps)(ChatItem);
+export default connect(null, mapDispatchToProps)(withStyles(styles)(ChatItem));
