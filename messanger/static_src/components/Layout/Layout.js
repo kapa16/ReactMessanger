@@ -14,7 +14,7 @@ const Layout = () => {
           <Grid item xs={12} md={3} component="aside" className="aside">
             <ChatList/>
           </Grid>
-          <Grid item xs={12} md={9} className="content" component="main">
+          <Grid item xs={12} md={9} component="main" className="content">
             <MessageList/>
             <MessageForm/>
           </Grid>
