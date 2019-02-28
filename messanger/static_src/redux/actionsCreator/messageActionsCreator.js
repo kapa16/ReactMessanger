@@ -7,9 +7,10 @@ export const inputMessage = (input) => {
   }
 };
 
-export const sendMessage = () => {
+export const sendMessage = (currentChatId) => {
   return {
-    type: SEND_MESSAGE
+    type: SEND_MESSAGE,
+    payload: currentChatId
   }
 };
 

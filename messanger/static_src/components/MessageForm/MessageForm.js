@@ -9,12 +9,11 @@ import {inputMessage, sendMessage, sendRobotMessage} from "../../redux/actionsCr
 import {bindActionCreators} from "redux";
 
 
-const MessageForm = ({sendMessage, inputMessage, sendRobotMessage, currentMessage, currentChatId}) => {
+const MessageForm = ({sendMessage, inputMessage, currentMessage, currentChatId}) => {
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
-    sendMessage();
-    setTimeout(sendRobotMessage, 2000, currentChatId);
+    sendMessage(currentChatId);
   };
 
   return (
@@ -45,6 +44,7 @@ MessageForm.propTypes ={
   createMessageHandler: PropTypes.func,
   onChangeMessage: PropTypes.func,
   currentMessage: PropTypes.string,
+  currentChatId: PropTypes.number
 };
 
 const mapStateToProps = (state) => {
