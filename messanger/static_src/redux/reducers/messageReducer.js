@@ -38,7 +38,7 @@ const getNewState = (chats, currentMessage, sender, currentChatId) => {
 const messageReducer = (state = initialState.messageInitialState, action) => {
   switch (action.type) {
     case SEND_MESSAGE:
-      return {...state, ...getNewState(state.chats, state.currentMessage, 'mySelf', state.currentChatId)};
+      return {...state, ...getNewState(state.chats, state.currentMessage, 'mySelf', action.payload)};
 
     case SEND_ROBOT_MESSAGE:
       return {...state, ...getNewState(state.chats, state.robotMessage, 'robot', action.payload)};
