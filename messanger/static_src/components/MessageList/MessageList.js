@@ -1,40 +1,52 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import * as PropTypes from "prop-types";
 import MessageItem from "../MessageItem/MessageItem";
 import './MessageList.sass';
 
 
-const MessageList = ({ messages }) => {
+const MessageList = ({chats, chatId}) => {
+  const currentChat = chats.find((chat) => chat.id === chatId);
 
-  const messagesItems = messages.map(({ id, ...msgProps }) => {
-    let className = 'list__item';
-    if (msgProps.sender === 'mySelf') {
-      className += ' list__item-my';
-    } else {
-      className += ' list__item-other';
-    }
+  let messagesItems = null;
 
-    return (
-      <li
-        key={id}
-        className={className}
-      >
-        <MessageItem
-          { ...msgProps }
-        />
-      </li>
-    );
-  });
+  if (currentChat) {
+    const messages = currentChat.messages;
+    messagesItems = messages.map(({id, ...msgProps}) => {
+      let className = 'list__item';
+      if (msgProps.sender === 'mySelf') {
+        className += ' list__item-my';
+      } else {
+        className += ' list__item-other';
+      }
+
+      return (
+        <li
+          key={id}
+          className={className}
+        >
+          <MessageItem {...msgProps}/>
+        </li>
+      );
+    });
+  }
 
   return (
     <ul className="list">
-      { messagesItems }
+      {messagesItems}
     </ul>
   )
 };
 
-MessageList.propTypes ={
+MessageList.propTypes = {
   messages: PropTypes.array
 };
 
-export default MessageList;
+const mapStateToProps = (state) => {
+  const {chats, currentChatId} = state.messageReducer;
+  return {
+    chats: chats,
+    chatId: currentChatId,
+  }
+};
+export default connect(mapStateToProps)(MessageList);

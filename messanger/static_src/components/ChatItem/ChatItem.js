@@ -1,22 +1,37 @@
 import React, {Fragment} from 'react';
+import * as PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {changeChatId} from "../../redux/actionsCreator/messageActionsCreator";
+import {bindActionCreators} from "redux";
 import {Link} from "react-router-dom";
-import PropTypes from 'prop-types';
-import {ListItem} from "@material-ui/core";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
+import {ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Badge} from "@material-ui/core";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const ListItemLink = ({to, ...props}) => (
-  <ListItem button component={Link} to={to} {...props}/>
+    <ListItem button component={Link} to={to} {...props}/>
   )
 ;
 
-const ChatItem = ({selected, id, title, img}) => {
-  //const imgSrc = require(`${img}`);
+const styles = {
+  root: {
+    width: '100%',
+  },
+  badge: {
+    bottom: '0',
+    right: '20px',
+    top: 'auto',
+  },
+};
+
+const ChatItem = ({countMessages, selected, id, title, img, changeChatId, classes}) => {
   return (
     <Fragment>
-        <ListItemLink to={`/chat/${id}`} selected={selected}>
+      <Badge classes={{root: classes.root, badge: classes.badge}} badgeContent={countMessages} color="primary">
+        <ListItemLink
+          to={`/chat/${id}`}
+          selected={selected}
+          onClick={() => changeChatId(id)}
+        >
           <ListItemAvatar>
             <Avatar src={img}/>
           </ListItemAvatar>
@@ -24,15 +39,18 @@ const ChatItem = ({selected, id, title, img}) => {
             {title}
           </ListItemText>
         </ListItemLink>
+      </Badge>
       <Divider/>
     </Fragment>
   )
 };
 
-ChatItem.propTypes ={
+ChatItem.propTypes = {
   selected: PropTypes.bool,
   id: PropTypes.number,
   title: PropTypes.string
 };
 
-export default ChatItem;
+const mapDispatchToProps = (dispatch) => bindActionCreators({changeChatId}, dispatch);
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(ChatItem));
