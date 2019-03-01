@@ -1,5 +1,10 @@
 export const INPUT_MESSAGE = 'INPUT_MESSAGE';
+
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const SEND_ROBOT_MESSAGE = 'SEND_ROBOT_MESSAGE';
+
 export const CHANGE_CHAT_ID = 'CHANGE_CHAT_ID';
 export const HEIGHT_LIGHT_CHAT = 'HEIGHT_LIGHT_CHAT';
+
+export const OPEN_MENU = 'OPEN_MENU';
+export const OPEN_ADD_CHAT_FORM = 'OPEN_ADD_CHAT_FORM';

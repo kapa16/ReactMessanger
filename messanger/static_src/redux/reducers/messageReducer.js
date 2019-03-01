@@ -2,7 +2,7 @@ import initialState from "./initialState";
 import {
   CHANGE_CHAT_ID,
   HEIGHT_LIGHT_CHAT,
-  INPUT_MESSAGE,
+  INPUT_MESSAGE, OPEN_ADD_CHAT_FORM, OPEN_MENU,
   SEND_MESSAGE,
   SEND_ROBOT_MESSAGE
 } from '../actions/messagesActions'
@@ -44,8 +44,8 @@ const getNewState = (chats, currentMessage, sender, currentChatId) => {
 };
 
 const messageReducer = (state = initialState.messageInitialState, action) => {
-  const { payload } = action;
-  const { chats } = state;
+  const {payload} = action;
+  const {chats} = state;
   let currentChat = 0;
   if (typeof payload === 'object' && 'chatId' in payload) {
     currentChat = findChat(chats, payload.chatId);
@@ -71,11 +71,16 @@ const messageReducer = (state = initialState.messageInitialState, action) => {
       currentChat.hasNewMessage = true;
       return {...state, ...{chats: chats}};
 
+    case OPEN_MENU:
+      return {...state, ...{openMenu: !payload.open}};
+
+    case OPEN_ADD_CHAT_FORM:
+      return {...state, ...{openAddChatForm: !payload.open}};
+
     default:
       return state;
   }
 };
-
 
 
 export default messageReducer;

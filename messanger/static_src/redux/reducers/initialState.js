@@ -2,6 +2,9 @@ const messageInitialState = {
   currentChatId: 1,
   currentMessage: '',
   robotMessage: 'This is robot answer',
+  openMenu: false,
+  openAddChatForm: false,
+  newChatTitle: '',
   chats: [
     {
       id: 1,

@@ -9,7 +9,6 @@ export default store => next => action => {
       setTimeout(() => store.dispatch(sendRobotMessage(payload.chatId)), 2000);
       break;
     case SEND_ROBOT_MESSAGE:
-      console.log(payload);
       store.dispatch(heightLightChat(payload.chatId));
       break;
   }

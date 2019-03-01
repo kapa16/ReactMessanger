@@ -2,6 +2,8 @@ import {
   CHANGE_CHAT_ID,
   HEIGHT_LIGHT_CHAT,
   INPUT_MESSAGE,
+  OPEN_ADD_CHAT_FORM,
+  OPEN_MENU,
   SEND_MESSAGE,
   SEND_ROBOT_MESSAGE
 } from "../actions/messagesActions";
@@ -38,6 +40,20 @@ export const heightLightChat = (chatId) => {
   return {
     type: HEIGHT_LIGHT_CHAT,
     payload: {chatId: chatId}
+  }
+};
+
+export const openCloseMenu = (open) => {
+  return {
+    type: OPEN_MENU,
+    payload: {open: open}
+  }
+};
+
+export const openAddChatMenu = (open) => {
+  return {
+    type: OPEN_ADD_CHAT_FORM,
+    payload: {open: open}
   }
 };
 
