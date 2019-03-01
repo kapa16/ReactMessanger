@@ -3,9 +3,10 @@ import * as PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {changeChatId} from "../../redux/actionsCreator/messageActionsCreator";
 import {bindActionCreators} from "redux";
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 import {ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Badge} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
+import './ChatItem.sass';
 
 const styles = {
   root: {
@@ -19,7 +20,7 @@ const styles = {
   },
 };
 
-const ChatItem = ({ countMessages, selected, id, title, img, changeChatId, classes, push }) => {
+const ChatItem = ({ hasNewMessage, countMessages, selected, id, title, img, changeChatId, classes, push }) => {
   return (
     <Fragment>
       <Badge
@@ -28,6 +29,7 @@ const ChatItem = ({ countMessages, selected, id, title, img, changeChatId, class
           color="primary"
       >
         <ListItem
+          className={hasNewMessage ? "height-light" : ""}
           selected={selected}
           onClick={() => {
             changeChatId(id);
