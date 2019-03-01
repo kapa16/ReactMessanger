@@ -1,4 +1,4 @@
-import {CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE} from "../actions/messagesActions";
+import { CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE } from "../actions/messagesActions";
 
 export const inputMessage = (input) => {
   return {

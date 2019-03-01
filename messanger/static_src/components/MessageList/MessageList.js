@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
 import MessageItem from "../MessageItem/MessageItem";
 import './MessageList.sass';
@@ -39,7 +39,8 @@ const MessageList = ({chats, chatId}) => {
 };
 
 MessageList.propTypes = {
-  messages: PropTypes.array
+  chats: PropTypes.arrayOf(PropTypes.object),
+  chatId: PropTypes.number
 };
 
 const mapStateToProps = (state) => {

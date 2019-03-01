@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import Grid from "@material-ui/core/Grid";
 import Header from "../Header/Header";
 import MessageList from "../MessageList/MessageList";

@@ -1,12 +1,12 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from '@material-ui/icons/Send';
 import './MessageForm.sass'
-import {connect} from "react-redux";
-import {inputMessage, sendMessage, sendRobotMessage} from "../../redux/actionsCreator/messageActionsCreator";
-import {bindActionCreators} from "redux";
+import { inputMessage, sendMessage, sendRobotMessage } from "../../redux/actionsCreator/messageActionsCreator";
 
 
 const MessageForm = ({sendMessage, inputMessage, currentMessage, currentChatId}) => {
@@ -33,16 +33,16 @@ const MessageForm = ({sendMessage, inputMessage, currentMessage, currentChatId})
           className="msg-form__input"
         />
         <IconButton type="submit" aria-label="Send" color="inherit">
-          <SendIcon />
+          <SendIcon/>
         </IconButton>
       </form>
     </Fragment>
   )
 };
 
-MessageForm.propTypes ={
-  createMessageHandler: PropTypes.func,
-  onChangeMessage: PropTypes.func,
+MessageForm.propTypes = {
+  sendMessage: PropTypes.func,
+  inputMessage: PropTypes.func,
   currentMessage: PropTypes.string,
   currentChatId: PropTypes.number
 };

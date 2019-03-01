@@ -1,6 +1,5 @@
-// import update from 'immutability-helper';
 import initialState from "./initialState";
-import {CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE} from '../actions/messagesActions'
+import { CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE } from '../actions/messagesActions'
 
 let currentMessageId = 1;
 

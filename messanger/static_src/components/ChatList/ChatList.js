@@ -1,17 +1,18 @@
 import React from 'react';
-import {List} from "@material-ui/core";
+import { connect } from "react-redux";
+import { List } from "@material-ui/core";
+import * as PropTypes from "prop-types";
 import ChatItem from "../ChatItem/ChatItem";
-import {connect} from "react-redux";
 
-const ChatList = ({ chats, chatId }) => {
+const ChatList = ({chats, chatId}) => {
   const ChatListElements = chats.map((chat) => {
     return (
-        <ChatItem
-          key={chat.id}
-          {...chat}
-          selected={chatId === chat.id}
-          countMessages={chat.messages.length}
-        />
+      <ChatItem
+        key={chat.id}
+        {...chat}
+        selected={chatId === chat.id}
+        countMessages={chat.messages.length}
+      />
     )
   });
 
@@ -22,8 +23,13 @@ const ChatList = ({ chats, chatId }) => {
   )
 };
 
+ChatList.propTypes = {
+  chats: PropTypes.arrayOf(PropTypes.object),
+  chatId: PropTypes.number,
+};
+
 const mapStateToProps = (state) => {
-  const { chats, currentChatId } = state.messageReducer;
+  const {chats, currentChatId} = state.messageReducer;
   return {
     chats: chats,
     chatId: currentChatId,
