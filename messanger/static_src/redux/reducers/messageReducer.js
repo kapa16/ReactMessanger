@@ -1,5 +1,11 @@
 import initialState from "./initialState";
-import { CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE } from '../actions/messagesActions'
+import {
+  CHANGE_CHAT_ID,
+  HEIGHT_LIGHT_CHAT,
+  INPUT_MESSAGE,
+  SEND_MESSAGE,
+  SEND_ROBOT_MESSAGE
+} from '../actions/messagesActions'
 
 let currentMessageId = 1;
 
@@ -14,8 +20,12 @@ const createMessage = (text, sender) => {
   }
 };
 
+const findChat = (chats, currentChatId) => {
+  return chats.find((chat) => chat.id === currentChatId);
+};
+
 const getNewState = (chats, currentMessage, sender, currentChatId) => {
-  const currentChat = chats.find((chat) => chat.id === currentChatId);
+  const currentChat = findChat(chats, currentChatId);
   if (!currentChat) {
     return {};
   }
@@ -33,22 +43,39 @@ const getNewState = (chats, currentMessage, sender, currentChatId) => {
   }
 };
 
-
 const messageReducer = (state = initialState.messageInitialState, action) => {
+  const { payload } = action;
+  const { chats } = state;
+  let currentChat = 0;
+  if (typeof payload === 'object' && 'chatId' in payload) {
+    currentChat = findChat(chats, payload.chatId);
+  }
   switch (action.type) {
     case SEND_MESSAGE:
-      return {...state, ...getNewState(state.chats, state.currentMessage, 'mySelf', action.payload)};
+      return {...state, ...getNewState(chats, state.currentMessage, 'mySelf', payload.chatId)};
 
     case SEND_ROBOT_MESSAGE:
-      return {...state, ...getNewState(state.chats, state.robotMessage, 'robot', action.payload)};
+      return {...state, ...getNewState(chats, state.robotMessage, 'robot', payload.chatId)};
 
     case INPUT_MESSAGE:
-      return {...state, ...{currentMessage: action.payload}};
+      return {...state, ...{currentMessage: payload.input}};
 
     case CHANGE_CHAT_ID:
-      return {...state, ...{currentChatId: action.payload}};
+      currentChat.hasNewMessage = false;
+      return {...state, ...{currentChatId: payload.chatId}};
+
+    case HEIGHT_LIGHT_CHAT:
+      if (payload.chatId === state.currentChatId) {
+        return state;
+      }
+      currentChat.hasNewMessage = true;
+      return {...state, ...{chats: chats}};
+
+    default:
+      return state;
   }
-  return state;
 };
+
+
 
 export default messageReducer;

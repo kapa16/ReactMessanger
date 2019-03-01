@@ -12,6 +12,7 @@ const ChatList = ({chats, chatId}) => {
         {...chat}
         selected={chatId === chat.id}
         countMessages={chat.messages.length}
+        hasNewMessage={chat.hasNewMessage}
       />
     )
   });
