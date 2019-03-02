@@ -72,10 +72,10 @@ const messageReducer = (state = initialState.messageInitialState, action) => {
       return {...state, ...{chats: chats}};
 
     case OPEN_MENU:
-      return {...state, ...{openMenu: !payload.open}};
+      return {...state, ...{openMenu: !state.openMenu}};
 
     case OPEN_ADD_CHAT_FORM:
-      return {...state, ...{openAddChatForm: !payload.open}};
+      return {...state, ...{openAddChatForm: !state.openAddChatForm}};
 
     default:
       return state;

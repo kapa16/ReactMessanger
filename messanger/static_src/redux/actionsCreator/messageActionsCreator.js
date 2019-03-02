@@ -43,10 +43,10 @@ export const heightLightChat = (chatId) => {
   }
 };
 
-export const openCloseMenu = (open) => {
+export const openCloseMenu = () => {
   return {
     type: OPEN_MENU,
-    payload: {open: open}
+    // payload: {open: open}
   }
 };
 
