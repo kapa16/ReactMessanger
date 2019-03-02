@@ -8,3 +8,6 @@ export const HEIGHT_LIGHT_CHAT = 'HEIGHT_LIGHT_CHAT';
 
 export const OPEN_MENU = 'OPEN_MENU';
 export const OPEN_ADD_CHAT_FORM = 'OPEN_ADD_CHAT_FORM';
+
+export const INPUT_CHAT_TITLE = 'INPUT_CHAT_TITLE';
+export const ADD_CHAT = 'ADD_CHAT';

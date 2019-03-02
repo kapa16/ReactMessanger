@@ -1,6 +1,7 @@
 import {
+  ADD_CHAT,
   CHANGE_CHAT_ID,
-  HEIGHT_LIGHT_CHAT,
+  HEIGHT_LIGHT_CHAT, INPUT_CHAT_TITLE,
   INPUT_MESSAGE,
   OPEN_ADD_CHAT_FORM,
   OPEN_MENU,
@@ -43,17 +44,22 @@ export const heightLightChat = (chatId) => {
   }
 };
 
-export const openCloseMenu = () => {
+export const openCloseAddChatMenu = () => {
   return {
-    type: OPEN_MENU,
-    // payload: {open: open}
+    type: OPEN_ADD_CHAT_FORM
   }
 };
 
-export const openAddChatMenu = (open) => {
+export const inputChatTitle = (title) => {
   return {
-    type: OPEN_ADD_CHAT_FORM,
-    payload: {open: open}
+    type: INPUT_CHAT_TITLE,
+    payload: {title: title}
+  }
+};
+
+export const addChat = () => {
+  return {
+    type: ADD_CHAT
   }
 };
 

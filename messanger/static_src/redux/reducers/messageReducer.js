@@ -1,7 +1,8 @@
 import initialState from "./initialState";
 import {
+  ADD_CHAT,
   CHANGE_CHAT_ID,
-  HEIGHT_LIGHT_CHAT,
+  HEIGHT_LIGHT_CHAT, INPUT_CHAT_TITLE,
   INPUT_MESSAGE, OPEN_ADD_CHAT_FORM, OPEN_MENU,
   SEND_MESSAGE,
   SEND_ROBOT_MESSAGE
@@ -24,7 +25,7 @@ const findChat = (chats, currentChatId) => {
   return chats.find((chat) => chat.id === currentChatId);
 };
 
-const getNewState = (chats, currentMessage, sender, currentChatId) => {
+const getNewStateMessages = (chats, currentMessage, sender, currentChatId) => {
   const currentChat = findChat(chats, currentChatId);
   if (!currentChat) {
     return {};
@@ -43,6 +44,24 @@ const getNewState = (chats, currentMessage, sender, currentChatId) => {
   }
 };
 
+const gerNewStateChats = (chats, newChatTitle) => {
+  const maxId = chats.reduce((maxId, chat) => maxId < chat['id'] ? chat['id'] : maxId, 0);
+  const newChat = {
+    id: maxId + 1,
+    title: newChatTitle,
+    img: "",
+    hasNewMessage: false,
+    messages: []
+  };
+  return {
+    chats: [
+      ...chats,
+      newChat
+    ],
+    newChatTitle: ''
+  }
+};
+
 const messageReducer = (state = initialState.messageInitialState, action) => {
   const {payload} = action;
   const {chats} = state;
@@ -52,10 +71,10 @@ const messageReducer = (state = initialState.messageInitialState, action) => {
   }
   switch (action.type) {
     case SEND_MESSAGE:
-      return {...state, ...getNewState(chats, state.currentMessage, 'mySelf', payload.chatId)};
+      return {...state, ...getNewStateMessages(chats, state.currentMessage, 'mySelf', payload.chatId)};
 
     case SEND_ROBOT_MESSAGE:
-      return {...state, ...getNewState(chats, state.robotMessage, 'robot', payload.chatId)};
+      return {...state, ...getNewStateMessages(chats, state.robotMessage, 'robot', payload.chatId)};
 
     case INPUT_MESSAGE:
       return {...state, ...{currentMessage: payload.input}};
@@ -71,11 +90,15 @@ const messageReducer = (state = initialState.messageInitialState, action) => {
       currentChat.hasNewMessage = true;
       return {...state, ...{chats: chats}};
 
-    case OPEN_MENU:
-      return {...state, ...{openMenu: !state.openMenu}};
-
     case OPEN_ADD_CHAT_FORM:
       return {...state, ...{openAddChatForm: !state.openAddChatForm}};
+
+    case INPUT_CHAT_TITLE:
+      return {...state, ...{newChatTitle: payload.title}};
+
+    case ADD_CHAT:
+      const newChats = gerNewStateChats(chats, state.newChatTitle);
+      return {...state, ...{openAddChatForm: !state.openAddChatForm}, ...newChats};
 
     default:
       return state;
