@@ -44,7 +44,7 @@ MessageList.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const {chats, currentChatId} = state.messageReducer;
+  const { chats, currentChatId } = state.messageReducer;
   return {
     chats: chats,
     chatId: currentChatId,

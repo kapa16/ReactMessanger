@@ -1,10 +1,10 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import * as PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {changeChatId} from "../../redux/actionsCreator/messageActionsCreator";
-import {bindActionCreators} from "redux";
+import { connect } from "react-redux";
+import { changeChatId } from "../../redux/actionsCreator/messageActionsCreator";
+import { bindActionCreators } from "redux";
 import { push } from 'connected-react-router';
-import {ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Badge} from "@material-ui/core";
+import { ListItem, ListItemText, Divider, ListItemAvatar, Avatar, Badge } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import './ChatItem.sass';
 
@@ -24,9 +24,9 @@ const ChatItem = ({ hasNewMessage, countMessages, selected, id, title, img, chan
   return (
     <Fragment>
       <Badge
-          classes={{root: classes.root, badge: classes.badge}}
-          badgeContent={countMessages}
-          color="primary"
+        classes={{ root: classes.root, badge: classes.badge }}
+        badgeContent={countMessages}
+        color="primary"
       >
         <ListItem
           className={hasNewMessage ? "height-light" : ""}
@@ -60,6 +60,6 @@ ChatItem.propTypes = {
   push: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({changeChatId, push}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ changeChatId, push }, dispatch);
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(ChatItem));

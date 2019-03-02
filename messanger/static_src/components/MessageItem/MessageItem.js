@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import './MessageItem.sass'
 
-const MessageItem = ({text, createdDate, createdTime}) => {
+const MessageItem = ({ text, createdDate, createdTime }) => {
   return (
     <div className="item">
       <p className="item__text">{text}</p>

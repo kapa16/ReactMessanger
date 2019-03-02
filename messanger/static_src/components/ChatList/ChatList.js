@@ -4,7 +4,7 @@ import { List } from "@material-ui/core";
 import * as PropTypes from "prop-types";
 import ChatItem from "../ChatItem/ChatItem";
 
-const ChatList = ({chats, chatId}) => {
+const ChatList = ({ chats, chatId }) => {
   const ChatListElements = chats.map((chat) => {
     return (
       <ChatItem
@@ -30,7 +30,7 @@ ChatList.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const {chats, currentChatId} = state.messageReducer;
+  const { chats, currentChatId } = state.messageReducer;
   return {
     chats: chats,
     chatId: currentChatId,
