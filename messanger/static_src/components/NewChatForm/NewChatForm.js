@@ -5,16 +5,16 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {openAddChatMenu} from "../../redux/actionsCreator/messageActionsCreator";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { addChat, inputChatTitle, openCloseAddChatMenu } from "../../redux/actionsCreator/messageActionsCreator";
 
-const NewChatForm = ({open, openAddChatMenu}) => {
+const NewChatForm = ({ open, inputChatTitle, openCloseAddChatMenu, addChat }) => {
   return (
     <div>
       <Dialog
         open={open}
-        onClose={openAddChatMenu}
+        onClose={openCloseAddChatMenu}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Enter chat title</DialogTitle>
@@ -26,13 +26,14 @@ const NewChatForm = ({open, openAddChatMenu}) => {
             label="Chat title"
             type="text"
             fullWidth
+            onChange={(e) => inputChatTitle(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={openAddChatMenu} color="primary">
+          <Button onClick={openCloseAddChatMenu} color="primary">
             Cancel
           </Button>
-          <Button onClick={openAddChatMenu} color="primary">
+          <Button onClick={addChat} color="primary">
             OK
           </Button>
         </DialogActions>
@@ -42,13 +43,13 @@ const NewChatForm = ({open, openAddChatMenu}) => {
 };
 
 const mapStateToProps = (state) => {
-  const {openAddChatForm} = state.messageReducer;
+  const { openAddChatForm } = state.messageReducer;
   return {
     open: openAddChatForm,
   }
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({openAddChatMenu}, dispatch);
+  bindActionCreators({ openCloseAddChatMenu, inputChatTitle, addChat }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewChatForm);
