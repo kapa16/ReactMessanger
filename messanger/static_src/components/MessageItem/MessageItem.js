@@ -14,8 +14,10 @@ const MessageItem = ({ text, createdDate, createdTime }) => {
   )
 };
 
-MessageItem.propTypes ={
-  text: PropTypes.string
+MessageItem.propTypes = {
+  text: PropTypes.string,
+  createdDate: PropTypes.string,
+  createdTime: PropTypes.string,
 };
 
 export default MessageItem;

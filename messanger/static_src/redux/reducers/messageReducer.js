@@ -1,6 +1,12 @@
-// import update from 'immutability-helper';
 import initialState from "./initialState";
-import {CHANGE_CHAT_ID, INPUT_MESSAGE, SEND_MESSAGE, SEND_ROBOT_MESSAGE} from '../actions/messagesActions'
+import {
+  ADD_CHAT,
+  CHANGE_CHAT_ID,
+  HEIGHT_LIGHT_CHAT, INPUT_CHAT_TITLE,
+  INPUT_MESSAGE, OPEN_ADD_CHAT_FORM,
+  SEND_MESSAGE,
+  SEND_ROBOT_MESSAGE
+} from '../actions/messagesActions'
 
 let currentMessageId = 1;
 
@@ -15,8 +21,12 @@ const createMessage = (text, sender) => {
   }
 };
 
-const getNewState = (chats, currentMessage, sender, currentChatId) => {
-  const currentChat = chats.find((chat) => chat.id === currentChatId);
+const findChat = (chats, currentChatId) => {
+  return chats.find((chat) => chat.id === currentChatId);
+};
+
+const getNewStateMessages = (chats, currentMessage, sender, currentChatId) => {
+  const currentChat = findChat(chats, currentChatId);
   if (!currentChat) {
     return {};
   }
@@ -34,22 +44,65 @@ const getNewState = (chats, currentMessage, sender, currentChatId) => {
   }
 };
 
+const gerNewStateChats = (chats, newChatTitle) => {
+  const maxId = chats.reduce((maxId, chat) => maxId < chat['id'] ? chat['id'] : maxId, 0);
+  const newChat = {
+    id: maxId + 1,
+    title: newChatTitle,
+    img: "",
+    hasNewMessage: false,
+    messages: []
+  };
+  return {
+    chats: [
+      ...chats,
+      newChat
+    ],
+    newChatTitle: ''
+  }
+};
 
 const messageReducer = (state = initialState.messageInitialState, action) => {
+  const { payload } = action;
+  const { chats } = state;
+  let currentChat = 0;
+  if (typeof payload === 'object' && 'chatId' in payload) {
+    currentChat = findChat(chats, payload.chatId);
+  }
   switch (action.type) {
     case SEND_MESSAGE:
-      return {...state, ...getNewState(state.chats, state.currentMessage, 'mySelf', action.payload)};
+      return { ...state, ...getNewStateMessages(chats, state.currentMessage, 'mySelf', payload.chatId) };
 
     case SEND_ROBOT_MESSAGE:
-      return {...state, ...getNewState(state.chats, state.robotMessage, 'robot', action.payload)};
+      return { ...state, ...getNewStateMessages(chats, state.robotMessage, 'robot', payload.chatId) };
 
     case INPUT_MESSAGE:
-      return {...state, ...{currentMessage: action.payload}};
+      return { ...state, ...{ currentMessage: payload.input } };
 
     case CHANGE_CHAT_ID:
-      return {...state, ...{currentChatId: action.payload}};
+      currentChat.hasNewMessage = false;
+      return { ...state, ...{ currentChatId: payload.chatId } };
+
+    case HEIGHT_LIGHT_CHAT:
+      if (payload.chatId === state.currentChatId) {
+        return state;
+      }
+      currentChat.hasNewMessage = true;
+      return { ...state, ...{ chats: chats } };
+
+    case OPEN_ADD_CHAT_FORM:
+      return { ...state, ...{ openAddChatForm: !state.openAddChatForm } };
+
+    case INPUT_CHAT_TITLE:
+      return { ...state, ...{ newChatTitle: payload.title } };
+
+    case ADD_CHAT:
+      const newChats = gerNewStateChats(chats, state.newChatTitle);
+      return { ...state, ...{ openAddChatForm: !state.openAddChatForm }, ...newChats };
+
+    default:
+      return state;
   }
-  return state;
 };
 
 export default messageReducer;
