@@ -10,8 +10,9 @@ const App = () => {
     <Grid container className="app">
       <CssBaseline/>
       <Switch>
-        <Route exact path="/" component={Layout}/>
-        <Route path="/chat/:id" render={(obj) => <Layout id={+obj.match.params.id}/>}/>
+        <Route path="/chat/:id" component={Layout}/>
+        <Route path="/profile" render={() => <Layout profile/>}/>
+        <Route path="/" component={Layout}/>
       </Switch>
     </Grid>
   )

@@ -1,5 +1,15 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
-export default class WithData extends Component {
-  
-}
+const WithData = (View, loadData) => {
+  return class extends Component {
+    componentDidMount() {
+      this.props[loadData]();
+    }
+
+    render() {
+      return <View  {...this.props}/>;
+    }
+  }
+};
+
+export default (WithData);
