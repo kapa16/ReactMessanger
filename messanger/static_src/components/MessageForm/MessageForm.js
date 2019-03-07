@@ -48,10 +48,7 @@ MessageForm.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  return {
-    currentMessage: state.messageReducer.currentMessage,
-    currentChatId: state.messageReducer.currentChatId
-  }
+  return state.messageReducer;
 };
 
 const mapDispatchToProps = dispatch =>

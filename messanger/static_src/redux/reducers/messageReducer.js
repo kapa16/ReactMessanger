@@ -1,11 +1,9 @@
 import initialState from "./initialState";
 import {
-  ADD_CHAT,
-  CHANGE_CHAT_ID,
+  ADD_CHAT, CHANGE_CHAT_ID, ERROR_CHATS_LOADING,
   HEIGHT_LIGHT_CHAT, INPUT_CHAT_TITLE,
-  INPUT_MESSAGE, OPEN_ADD_CHAT_FORM,
-  SEND_MESSAGE,
-  SEND_ROBOT_MESSAGE
+  INPUT_MESSAGE, OPEN_ADD_CHAT_FORM, SEND_MESSAGE,
+  SEND_ROBOT_MESSAGE, START_CHATS_LOADING, SUCCESS_CHATS_LOADING
 } from '../actions/messagesActions'
 
 let currentMessageId = 1;
@@ -21,84 +19,74 @@ const createMessage = (text, sender) => {
   }
 };
 
-const findChat = (chats, currentChatId) => {
-  return chats.find((chat) => chat.id === currentChatId);
-};
-
 const getNewStateMessages = (chats, currentMessage, sender, currentChatId) => {
-  const currentChat = findChat(chats, currentChatId);
-  if (!currentChat) {
-    return {};
-  }
-
-  currentChat.messages.push(createMessage(currentMessage, sender));
-
-  const index = chats.indexOf(currentChat);
-  return {
-    chats: [
-      ...chats.slice(0, index),
-      Object.assign({}, currentChat),
-      ...chats.slice(index + 1)
-    ],
-    currentMessage: ''
-  }
+  chats[currentChatId].messages.push(createMessage(currentMessage, sender));
+  return {...chats, currentMessage: ''}
 };
+
+const getMaxId = (chats) => Object.keys(chats).reduce((maxVal, value) => +maxVal < +value ? +value : +maxVal, 0);
 
 const gerNewStateChats = (chats, newChatTitle) => {
-  const maxId = chats.reduce((maxId, chat) => maxId < chat['id'] ? chat['id'] : maxId, 0);
+  const nextId = getMaxId(chats) + 1;
   const newChat = {
-    id: maxId + 1,
+    id: nextId,
     title: newChatTitle,
     img: "",
     hasNewMessage: false,
     messages: []
   };
   return {
-    chats: [
+    chats: {
       ...chats,
-      newChat
-    ],
+      [nextId]: newChat
+    },
     newChatTitle: ''
   }
 };
 
 const messageReducer = (state = initialState.messageInitialState, action) => {
-  const { payload } = action;
-  const { chats } = state;
-  let currentChat = 0;
-  if (typeof payload === 'object' && 'chatId' in payload) {
-    currentChat = findChat(chats, payload.chatId);
-  }
+  const {payload} = action;
+  const {chats} = state;
+
   switch (action.type) {
     case SEND_MESSAGE:
-      return { ...state, ...getNewStateMessages(chats, state.currentMessage, 'mySelf', payload.chatId) };
+      return {...state, ...getNewStateMessages(chats, state.currentMessage, 'mySelf', payload.chatId)};
 
     case SEND_ROBOT_MESSAGE:
-      return { ...state, ...getNewStateMessages(chats, state.robotMessage, 'robot', payload.chatId) };
+      return {...state, ...getNewStateMessages(chats, state.robotMessage, 'robot', payload.chatId)};
 
     case INPUT_MESSAGE:
-      return { ...state, ...{ currentMessage: payload.input } };
+      return {...state, ...{currentMessage: payload.input}};
 
     case CHANGE_CHAT_ID:
-      currentChat.hasNewMessage = false;
-      return { ...state, ...{ currentChatId: payload.chatId } };
+      chats[payload.chatId].hasNewMessage = false;
+      return {...state, ...{currentChatId: payload.chatId}};
 
     case HEIGHT_LIGHT_CHAT:
       if (payload.chatId === state.currentChatId) {
         return state;
       }
-      currentChat.hasNewMessage = true;
-      return { ...state, ...{ chats: chats } };
+      chats[payload.chatId].hasNewMessage = true;
+      return {...state, ...chats};
 
     case OPEN_ADD_CHAT_FORM:
-      return { ...state, ...{ openAddChatForm: !state.openAddChatForm } };
+      return {...state, ...{openAddChatForm: !state.openAddChatForm}};
 
     case INPUT_CHAT_TITLE:
-      return { ...state, ...{ newChatTitle: payload.title } };
+      return {...state, ...{newChatTitle: payload.title}};
 
     case ADD_CHAT:
       const newChats = gerNewStateChats(chats, state.newChatTitle);
-      return { ...state, ...{ openAddChatForm: !state.openAddChatForm }, ...newChats };
+      return {...state, ...{openAddChatForm: !state.openAddChatForm}, ...newChats};
+
+    case START_CHATS_LOADING:
+      return {...state, ...{isLoading: true, isError: false}};
+
+    case SUCCESS_CHATS_LOADING:
+      return {...state, ...{chats: action.payload.entities.chats}, ...{isLoading: false, isError: false}};
+
+    case ERROR_CHATS_LOADING:
+      return {...state, ...{isLoading: false, isError: true}};
 
     default:
       return state;

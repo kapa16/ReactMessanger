@@ -1,11 +1,12 @@
 import React from 'react';
 import MenuItem from "@material-ui/core/MenuItem";
 import { bindActionCreators } from "redux";
+import { push } from 'connected-react-router';
 import { openCloseAddChatMenu } from "../../redux/actionsCreator/messageActionsCreator";
 import { connect } from "react-redux";
 import Menu from "@material-ui/core/Menu";
 
-const HeaderMenu = ({ id, open, anchorEl, handleCloseMenu, openCloseAddChatMenu }) => {
+const HeaderMenu = ({ id, open, anchorEl, handleCloseMenu, openCloseAddChatMenu, push }) => {
   return (
     <Menu
       id={id}
@@ -13,7 +14,8 @@ const HeaderMenu = ({ id, open, anchorEl, handleCloseMenu, openCloseAddChatMenu 
       open={open}
       onClose={handleCloseMenu}
     >
-      <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+      <MenuItem onClick={() => {push(`/profile`); handleCloseMenu()}}>Profile</MenuItem>
+      <MenuItem onClick={() => {push(`/`); handleCloseMenu()}}>Chats</MenuItem>
       <MenuItem onClick={() => {
         openCloseAddChatMenu();
         handleCloseMenu()
@@ -24,6 +26,6 @@ const HeaderMenu = ({ id, open, anchorEl, handleCloseMenu, openCloseAddChatMenu 
 };
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openCloseAddChatMenu }, dispatch);
+  bindActionCreators({ openCloseAddChatMenu, push }, dispatch);
 
 export default connect(null, mapDispatchToProps)(HeaderMenu);

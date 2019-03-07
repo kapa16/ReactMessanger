@@ -3,14 +3,18 @@ import { connect } from "react-redux";
 import { List } from "@material-ui/core";
 import * as PropTypes from "prop-types";
 import ChatItem from "../ChatItem/ChatItem";
+import WithData from "../hoc/WithData";
+import { bindActionCreators } from "redux";
+import { loadChats } from "../../redux/actionsCreator/messageActionsCreator";
 
-const ChatList = ({ chats, chatId }) => {
-  const ChatListElements = chats.map((chat) => {
+const ChatList = ({ chats, currentChatId }) => {
+  const ChatListElements = Object.keys(chats).map((chatId) => {
+    const chat = chats[chatId];
     return (
       <ChatItem
         key={chat.id}
         {...chat}
-        selected={chatId === chat.id}
+        selected={currentChatId == chatId}
         countMessages={chat.messages.length}
         hasNewMessage={chat.hasNewMessage}
       />
@@ -25,16 +29,13 @@ const ChatList = ({ chats, chatId }) => {
 };
 
 ChatList.propTypes = {
-  chats: PropTypes.arrayOf(PropTypes.object),
+  chats: PropTypes.object,
   chatId: PropTypes.number,
 };
 
 const mapStateToProps = (state) => {
-  const { chats, currentChatId } = state.messageReducer;
-  return {
-    chats: chats,
-    chatId: currentChatId,
-  }
+  return state.messageReducer;
 };
+const mapDispatchToProps = (dispatch) => bindActionCreators({ loadChats }, dispatch);
 
-export default connect(mapStateToProps)(ChatList);
+export default connect(mapStateToProps, mapDispatchToProps)(WithData(ChatList, 'loadChats'));

@@ -5,19 +5,33 @@ import MessageList from "../MessageList/MessageList";
 import MessageForm from "../MessageForm/MessageForm";
 import ChatList from "../ChatList/ChatList";
 import './Layout.sass'
+import Profile from "../Profile/Profile";
 
-const Layout = () => {
+const Layout = ({ profile }) => {
+
+  const profileComponent = (
+    <Grid item xs={12} md={12} component="aside" className="aside">
+      <Profile/>
+    </Grid>
+  );
+
+  const messengerComponent = (
+    <Fragment>
+      <Grid item xs={12} md={3} component="aside" className="aside">
+        <ChatList/>
+      </Grid>
+      <Grid item xs={12} md={9} component="main" className="content">
+        <MessageList/>
+        <MessageForm/>
+      </Grid>
+    </Fragment>
+  );
+
   return (
     <Fragment>
       <Header/>
       <Grid container className="container layout">
-        <Grid item xs={12} md={3} component="aside" className="aside">
-          <ChatList/>
-        </Grid>
-        <Grid item xs={12} md={9} component="main" className="content">
-          <MessageList/>
-          <MessageForm/>
-        </Grid>
+        {profile ? profileComponent : messengerComponent}
       </Grid>
     </Fragment>
   )

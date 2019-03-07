@@ -1,14 +1,19 @@
 import React from 'react';
 import { connect } from "react-redux";
 import * as PropTypes from "prop-types";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import MessageItem from "../MessageItem/MessageItem";
 import './MessageList.sass';
 
 
-const MessageList = ({chats, chatId}) => {
-  const currentChat = chats.find((chat) => chat.id === chatId);
+const MessageList = ({chats, currentChatId, isLoading}) => {
+  const currentChat = chats[currentChatId];
 
   let messagesItems = null;
+
+  if (isLoading) {
+    return (<CircularProgress/>)
+  }
 
   if (currentChat) {
     const messages = currentChat.messages;
@@ -21,6 +26,7 @@ const MessageList = ({chats, chatId}) => {
       }
 
       return (
+
         <li
           key={id}
           className={className}
@@ -39,15 +45,11 @@ const MessageList = ({chats, chatId}) => {
 };
 
 MessageList.propTypes = {
-  chats: PropTypes.arrayOf(PropTypes.object),
+  chats: PropTypes.object,
   chatId: PropTypes.number
 };
 
 const mapStateToProps = (state) => {
-  const { chats, currentChatId } = state.messageReducer;
-  return {
-    chats: chats,
-    chatId: currentChatId,
-  }
+  return state.messageReducer;
 };
 export default connect(mapStateToProps)(MessageList);
