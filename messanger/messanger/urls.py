@@ -30,5 +30,9 @@ urlpatterns = [
         template_name="core/profile.json",
         content_type='application/json',
     )), name='data.json'),
+    url(r'^service-worker.js', cache_control(max_age=3600)(TemplateView.as_view(
+        template_name="core/service-worker.js",
+        content_type='application/javascript',
+    )), name='service-worker.js'),
     url(r'^', Messanger.as_view()),
 ]
